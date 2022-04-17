@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"rentalx","dependencies":{"bcryptjs":{"version":"2.4.3"},"csv-parse":{"version":"5.0.4"},"express":{"version":"4.17.3"},"multer":{"version":"1.4.4"},"pg":{"version":"8.7.3"},"reflect-metadata":{"version":"0.1.13"},"swagger-ui-express":{"version":"4.3.0"},"tsyringe":{"version":"4.6.0"},"typeorm":{"version":"0.2.45"},"uuid":{"version":"8.3.2"}}}
