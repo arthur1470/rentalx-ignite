@@ -1,15 +1,21 @@
+import { inject, injectable } from "tsyringe";
+
 import { ICreateCategoryDTO } from "../../repositories/ICategoriesRepository";
 import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
 
+@injectable()
 class CreateSpecificationUseCase {
-    constructor(private specificationsRepository: ISpecificationsRepository) {}
+    constructor(
+        @inject("SpecificationsRepository")
+        private specificationsRepository: ISpecificationsRepository,
+    ) {}
 
-    execute({ name, description }: ICreateCategoryDTO): void {
-        if (this.specificationsRepository.findByName(name)) {
+    async execute({ name, description }: ICreateCategoryDTO): Promise<void> {
+        if (await this.specificationsRepository.findByName(name)) {
             throw new Error("Specification already exists!");
         }
 
-        this.specificationsRepository.create({ name, description });
+        await this.specificationsRepository.create({ name, description });
     }
 }
 
