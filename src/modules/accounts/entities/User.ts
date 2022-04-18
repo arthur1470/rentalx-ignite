@@ -18,8 +18,14 @@ class User {
     @Column()
     driver_license: string;
 
-    @CreateDateColumn()
+    @Column()
     isAdmin: boolean;
+
+    @Column()
+    avatar: string;
+
+    @CreateDateColumn()
+    created_at: Date;
 
     constructor() {
         if (!this.id) this.id = uuidv4();

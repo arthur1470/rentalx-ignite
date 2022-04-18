@@ -21,11 +21,11 @@ interface IResponse {
 @injectable()
 class AuthenticateUserUseCase {
     constructor(
-        @inject("UserRepository") private userRepository: IUsersRepository,
+        @inject("UsersRepository") private usersRepository: IUsersRepository,
     ) {}
 
     async execute({ email, password }: IRequest): Promise<IResponse> {
-        const user = await this.userRepository.findByEmail(email);
+        const user = await this.usersRepository.findByEmail(email);
 
         if (!user) throw new AppError("Email or password incorrect!");
 
