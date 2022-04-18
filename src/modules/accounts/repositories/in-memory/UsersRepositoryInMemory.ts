@@ -1,20 +1,15 @@
-import { getRepository, Repository } from "typeorm";
-
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { User } from "../../entities/User";
 import { IUsersRepository } from "../IUsersRepository";
 
-class UsersRepository implements IUsersRepository {
-    private repository: Repository<User>;
+class UsersRepositoryInMemory implements IUsersRepository {
+    users: User[] = [];
 
-    constructor() {
-        this.repository = getRepository(User);
-    }
     async findById(id: string): Promise<User> {
-        return this.repository.findOne(id);
+        return this.users.find(user => user.id === id);
     }
     async findByEmail(email: string): Promise<User> {
-        return this.repository.findOne({ email });
+        return this.users.find(user => user.email === email);
     }
 
     async create({
@@ -22,20 +17,18 @@ class UsersRepository implements IUsersRepository {
         email,
         driver_license,
         password,
-        avatar,
-        id,
     }: ICreateUserDTO): Promise<void> {
-        const user = this.repository.create({
+        const user = new User();
+
+        Object.assign(user, {
             name,
             email,
             driver_license,
             password,
-            avatar,
-            id,
         });
 
-        await this.repository.save(user);
+        this.users.push(user);
     }
 }
 
-export { UsersRepository };
+export { UsersRepositoryInMemory };
