@@ -19,11 +19,7 @@ class CarsRepository implements ICarsRepository {
     async create(data: ICreateCarDTO): Promise<Car> {
         const car = this.repository.create(data);
 
-        const carPersisted = await this.repository.save(car);
-
-        console.log("Repository: ", carPersisted);
-
-        return carPersisted;
+        return this.repository.save(car);
     }
 
     async findByLicensePlate(license_plate: string): Promise<Car> {

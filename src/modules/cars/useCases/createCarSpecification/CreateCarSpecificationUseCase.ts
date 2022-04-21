@@ -27,12 +27,7 @@ class CreateCarSpecificationUseCase {
             specifications_id,
         );
 
-        console.log(specifications);
-
         car.specifications = specifications;
-
-        console.log(car);
-
         return this.carsRepository.create(car);
     }
 }
