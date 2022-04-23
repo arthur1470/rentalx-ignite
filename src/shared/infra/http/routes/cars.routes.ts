@@ -1,7 +1,7 @@
 import { Router } from "express";
 
+import { CreateCarController } from "@modules/cars/useCases/createCar/CreateCarController";
 import { CreateCarSpecificationController } from "@modules/cars/useCases/createCarSpecification/CreateCarSpecificationController";
-import { CreateCarController } from "@modules/cars/useCases/createCarUseCase/CreateCarController";
 import { ListAvailableCarsController } from "@modules/cars/useCases/listCars/ListAvailableCarsController";
 
 import { ensureAdmin } from "../middlewares/ensureAdmin";
