@@ -1,11 +1,13 @@
 import dayjs from "dayjs";
 
+import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
 import { RentalsRepositoryInMemory } from "@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory";
 import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 import { AppError } from "@shared/errors/AppError";
 
 import { CreateRentalUseCase } from "./CreateRentalUseCase";
 
+let carsRepositoryInMemory: CarsRepositoryInMemory;
 let rentalsRepositoryInMemory: RentalsRepositoryInMemory;
 let createRentalUseCase: CreateRentalUseCase;
 let dayjsProvider: DayjsDateProvider;
@@ -13,20 +15,45 @@ let dayjsProvider: DayjsDateProvider;
 describe("Create Rental", () => {
     const dayAdd24Hours = dayjs().add(1, "day").toDate();
 
-    beforeEach(() => {
+    beforeEach(async () => {
         rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
+        carsRepositoryInMemory = new CarsRepositoryInMemory();
+
         dayjsProvider = new DayjsDateProvider();
 
         createRentalUseCase = new CreateRentalUseCase(
             rentalsRepositoryInMemory,
             dayjsProvider,
+            carsRepositoryInMemory,
         );
+
+        await carsRepositoryInMemory.create({
+            id: "123",
+            brand: "teste1",
+            name: "teste1",
+            category_id: "teste1",
+            daily_rate: 100,
+            description: "teste1",
+            fine_amount: 200,
+            license_plate: "123",
+        });
+
+        await carsRepositoryInMemory.create({
+            id: "1234",
+            brand: "teste2",
+            name: "teste2",
+            category_id: "teste2",
+            daily_rate: 100,
+            description: "teste2",
+            fine_amount: 200,
+            license_plate: "1234",
+        });
     });
 
     it("Should be able to create a new rental", async () => {
         const rental = await createRentalUseCase.execute({
             user_id: "12345",
-            car_id: "121212",
+            car_id: "123",
             expected_return_date: dayAdd24Hours,
         });
 
