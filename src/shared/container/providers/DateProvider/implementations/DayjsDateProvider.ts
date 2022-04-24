@@ -39,6 +39,10 @@ class DayjsDateProvider implements IDateProvider {
     addHours(hours: number): Date {
         return dayjs().add(hours, "hour").toDate();
     }
+
+    compareIfBefore(date: Date): boolean {
+        return dayjs(date).isBefore(this.dateNow());
+    }
 }
 
 export { DayjsDateProvider };
